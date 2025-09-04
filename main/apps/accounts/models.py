@@ -11,7 +11,8 @@ class User(AbstractUser):
     unidade = models.ForeignKey(
         'core.Unidade', 
         on_delete=models.CASCADE, 
-        related_name='usuarios'
+        related_name='usuarios',
+        default=1
     )
     tipo = models.CharField(max_length=15, choices=TIPO_CHOICES, default='funcionario')
     telefone = models.CharField(max_length=20, blank=True)
