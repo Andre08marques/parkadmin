@@ -1,0 +1,72 @@
+{% extends 'main_app/base/base.html' %}
+{% load static %}
+{% block page_title %}{{ page_title }}{% endblock page_title %}
+
+{% block content %}
+{% include "main_app/base/messages.html" %}
+
+<section class="content" id="listaraddarea">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'addunidade' %}" class="btn btn-primary mb-2 text-white">Nova Unidade</a>
+            </div>
+            <div class="col-md-12 text-center">
+                <div class="card mt-2">
+                    <div class="card-header">
+                      <h3 class="card-title"><b>{{ page_title }}</b></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body ">
+                        <div class="table-responsive">
+                            <table class="table table-striped text-center" id="tableclient">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome da Unidade</th>
+                                    <th scope="col">Endereço</th>
+                                    <th scope="col">Opções</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for unidade in unidades %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ unidade.nome }}</td> 
+                                            <td>{{ unidade.endereco_resumido }}</td>
+                                            <td>
+                                                <a class="btn btn-success" href="{% url 'editunidade' unidade.id %}"><i class="fas fa-pen"></i></a>
+                                                <a class="btn btn-danger" href=""><i class="fas fa-trash"></i></a>
+                                            </td> 
+                                                          
+                                        </tr>
+                                    {% empty %}
+                                        <tr><td class="text-center" colspan="7">Não foi possível encontrar unidades.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+         
+</section>
+{% endblock content %}
+
+
+{% block custom_js %}
+
+<script>
+    $(document).ready(function () {
+        $('#tableclient').DataTable({
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
+            }
+        });
+    });
+</script>
+{% endblock custom_js %}
