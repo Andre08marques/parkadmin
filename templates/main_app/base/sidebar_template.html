@@ -41,7 +41,7 @@
                 <li class="nav-item">
                     
                     <!-- {% url 'unidade' as unidade %} -->
-                    <a href="#" class="nav-link {% if request.resolver_match.url_name == 'listcontrato' %} active {% endif %}">
+                    <a href="{% url 'listcontrato' %}" class="nav-link {% if request.resolver_match.url_name == 'listcontrato' %} active {% endif %}">
                         <i class="nav-icon fas fa-file-signature"></i>
                         <p>
                             Contratos
