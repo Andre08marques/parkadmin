@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <a href="{% url 'addcontrato' %}" class="btn btn-primary mb-2 text-white">Novo Contrato</a>
+                <a href="{% url 'addveiculo' %}" class="btn btn-primary mb-2 text-white">Novo Veículo</a>
             </div>
             <div class="col-md-12 text-center">
                 <div class="card mt-2">
@@ -23,38 +23,30 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Usuário</th>
-                                    <th scope="col">Unidade</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Quantidade de Placas</th>
-                                    <th scope="col">Placas Simultâneas</th>
-                                    <th scope="col">Dia de Vencimento</th>
-                                    <th scope="col">Tipo de Pagamento</th>
-                                    <th scope="col">Tipo de Faturamento</th>
+                                    <th scope="col">Contrato</th>
+                                    <th scope="col">Placa</th>
+                                    <th scope="col">Situação</th>
+                                    <th scope="col">Status da Placa</th>
+                                    
                                     
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {% for contrato in contratos %}
+                                    {% for veiculo in veiculos %}
                                         <tr>
                                             <th scope="row">{{ forloop.counter }}</th>
-                                            <td>{{ contrato.user }}</td> 
-                                            <td>{{ contrato.unidade }}</td>
-                                            <td>{{ contrato.status }}</td>
-                                            <td>{{ contrato.quantidadePlacas }}</td>
-                                            <td>{{ contrato.placasSimultaneas }}</td>
-                                            <td>{{ contrato.diaVencimento}}</td>
-                                            <td>{{ contrato.tipoPagamento}}</td>
-                                            <td>{{ contrato.tipoFaturamento}}</td>
-                                            
+                                            <td>{{ veiculo.contrato }}</td> 
+                                            <td>{{ veiculo.placa }}</td>
+                                            <td>{{ veiculo.situacao }}</td>
+                                            <td>{{ veiculo.statusPlaca }}</td>                                            
                                             <td>
-                                                <a class="btn btn-success" href="{% url 'editcontrato' %}"><i class="fas fa-pen"></i></a>
+                                                <a class="btn btn-success" href="#"><i class="fas fa-pen"></i></a>
                                                 <a class="btn btn-danger" href=""><i class="fas fa-trash"></i></a>
                                             </td> 
                                                           
                                         </tr>
                                     {% empty %}
-                                        <tr><td class="text-center" colspan="7">Não foi possível encontrar contratos.</td></tr>
+                                        <tr><td class="text-center" colspan="7">Não foi possível encontrar veiculos.</td></tr>
                                     {% endfor %}
                                 </tbody>
                             </table>

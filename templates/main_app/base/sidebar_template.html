@@ -38,13 +38,25 @@
                         </p>
                     </a>
                 </li>
+                
                 <li class="nav-item">
                     
-                    <!-- {% url 'unidade' as unidade %} -->
-                    <a href="#" class="nav-link {% if request.resolver_match.url_name == 'listcontrato' %} active {% endif %}">
+                    <!-- {% url 'contrato' as contrato%} -->
+                    <a href="{% url 'listcontrato' %}" class="nav-link {% if request.resolver_match.url_name == 'listcontrato' %} active {% endif %}">
                         <i class="nav-icon fas fa-file-signature"></i>
                         <p>
                             Contratos
+
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <!-- {% url 'home' as home %} -->
+                    <a href="{% url 'listveiculo' %}" class="nav-link {% if request.resolver_match.url_name == 'listveiculo' %} active {% endif %}">
+                        <i class="nav-icon fas fa-car"></i>
+                        <p>
+                            Veículos
 
                         </p>
                     </a>
