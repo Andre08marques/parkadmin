@@ -1,0 +1,85 @@
+{% extends 'main_app/base/base.html' %}
+{% load static %}
+{% block page_title %}{{ page_title }}{% endblock page_title %}
+
+{% block content %}
+{% include "main_app/base/messages.html" %}
+
+<section class="content" id="listaraddarea">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'addcontrato' %}" class="btn btn-primary mb-2 text-white">Novo Contrato</a>
+            </div>
+            <div class="col-md-12 text-center">
+                <div class="card mt-2">
+                    <div class="card-header">
+                      <h3 class="card-title"><b>{{ page_title }}</b></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body ">
+                        <div class="table-responsive">
+                            <table class="table table-striped text-center" id="tableclient">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Usuário</th>
+                                    <th scope="col">Unidade</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Quantidade de Placas</th>
+                                    <th scope="col">Placas Simultâneas</th>
+                                    <th scope="col">Dia de Vencimento</th>
+                                    <th scope="col">Tipo de Pagamento</th>
+                                    <th scope="col">Tipo de Faturamento</th>
+                                    
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for contrato in contratos %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ contrato.user }}</td> 
+                                            <td>{{ contrato.unidade }}</td>
+                                            <td>{{ contrato.status }}</td>
+                                            <td>{{ contrato.quantidadePlacas }}</td>
+                                            <td>{{ contrato.placasSimultaneas }}</td>
+                                            <td>{{ contrato.diaVencimento}}</td>
+                                            <td>{{ contrato.tipoPagamento}}</td>
+                                            <td>{{ contrato.tipoFaturamento}}</td>
+                                            
+                                            <td>
+                                                <a class="btn btn-success" href="{% url 'editcontrato' %}"><i class="fas fa-pen"></i></a>
+                                                <a class="btn btn-danger" href=""><i class="fas fa-trash"></i></a>
+                                            </td> 
+                                                          
+                                        </tr>
+                                    {% empty %}
+                                        <tr><td class="text-center" colspan="7">Não foi possível encontrar contratos.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+         
+</section>
+{% endblock content %}
+
+
+{% block custom_js %}
+
+<script>
+    $(document).ready(function () {
+        $('#tableclient').DataTable({
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
+            }
+        });
+    });
+</script>
+{% endblock custom_js %}
