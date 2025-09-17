@@ -10,23 +10,34 @@ class FormSettings(forms.ModelForm):
             field.field.widget.attrs['class'] = 'form-control'
 
 
-class UnidadeAddform(FormSettings):
-    def __init__(self, *args, **kwargs):
-        super(UnidadeAddform, self).__init__(*args, **kwargs)
-
+class UnidadeAddform(forms.ModelForm):
     class Meta:
         model = Unidade
-        fields = ('__all__')
+        fields = "__all__"
         labels = {
-           "nome": "Nome*",
-           "postalCode": "Cep",
-           "state": "Estado",
-           "city": "Cidade",
-           "district": "Bairro",
-           "address": "Endereço",
-           "addressNumber": "Número",
-           "vagasLivres": "Vagas livres",
-           "horarioFuncionamento": "Horário de funcionamento",
-           "codPessEmpresa": "Código da empresa"
-
+            "nome": "Nome*",
+            "postalCode": "Cep",
+            "state": "Estado",
+            "city": "Cidade",
+            "district": "Bairro",
+            "address": "Endereço",
+            "addressNumber": "Número",
+            "vagasLivres": "Vagas livres",
+            "horarioAbertura": "Abertura",
+            "horarioFechamento": "Fechamento",
+            "codPessEmpresa": "Código da empresa"
+        }
+        widgets = {
+            "horarioAbertura": forms.TimeInput(
+                attrs={
+                    "type": "time",  
+                    "class": "form-control"
+                }
+            ),
+            "horarioFechamento": forms.TimeInput(
+                attrs={
+                    "type": "time",  
+                    "class": "form-control"
+                }
+            )
         }

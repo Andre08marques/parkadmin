@@ -41,9 +41,14 @@ class Unidade(models.Model):
     addressNumber = models.CharField(max_length=100, null=True, blank=True)
     vagasLivres = models.IntegerField(default=0)
     vagasPresas = models.IntegerField(default=0)
-    horarioFuncionamento = models.TimeField()
+    horarioAbertura = models.TimeField(null=True)
+    horarioFechamento = models.TimeField(null=True)
     codPessEmpresa = models.CharField(max_length=50, help_text="Sistema externo")
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.nome
+
     @property
     def endereco_resumido(self):
         """Retorna endereço resumido (rua, número, bairro, cidade)"""
@@ -62,4 +67,3 @@ class Unidade(models.Model):
             partes.append(self.city)
         
         return " - ".join(partes) if partes else "Endereço não informado"
-

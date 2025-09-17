@@ -7,6 +7,14 @@ class Contrato(models.Model):
         ('pix', 'PIX'),
         ('boleto', 'Boleto'),
     ]
+
+    STATUS = [
+        ('ativo', 'Ativo'),
+        ('inativo', 'Inativo'),
+        ('financeiroatraso', 'Financeiro em atraso'),
+
+    ]
+    
     
     TIPO_FATURAMENTO_CHOICES = [
         ('nfs', 'Nota Fiscal de Serviço'),
@@ -23,7 +31,7 @@ class Contrato(models.Model):
         on_delete=models.CASCADE, 
         related_name='contratos'
     )
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, choices=STATUS)
     quantidadePlacas = models.IntegerField()
     placasSimultaneas = models.IntegerField()
     diaVencimento = models.IntegerField()
@@ -38,4 +46,4 @@ class Contrato(models.Model):
         verbose_name_plural = "Contratos"
 
     def __str__(self):
-        return f"Contrato {self.id} - {self.user.get_full_name()} - {self.unidade.nome}"
+        return f"Contrato {self.id} - {self.user.get_full_name()} - {self.unidade}"

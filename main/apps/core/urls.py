@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('unidade/list', views.ListUnidade.as_view(), name='listunidade'),
     path('unidade/add', views.UnidadeAdd.as_view(), name='addunidade'),
-    path('unidade/edit/<int:id>', views.UnidadeEdit.as_view(), name='editunidade')
+    path('unidade/edit/<int:id>', views.UnidadeEdit.as_view(), name='editunidade'),
+    path('unidade/delete/<int:id>', views.UnidadeDelete.as_view(), name='deleteunidade')
     
 ]

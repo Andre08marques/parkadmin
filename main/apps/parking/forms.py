@@ -17,6 +17,9 @@ class TablePriceAddform(FormSettings):
     class Meta:
         model = TabelaPreco
         fields = ('__all__')
+        widgets = {
+            "ativo": forms.CheckboxInput(attrs={"class": "form-check-input"})
+        }
         labels = {
            "nome": "Nome*",
            "postalCode": "Cep",

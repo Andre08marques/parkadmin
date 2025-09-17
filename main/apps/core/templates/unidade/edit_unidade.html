@@ -135,14 +135,25 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             <div class="form-group mb-2">
-                                <label for="{{ form.horarioFuncionamento.id_for_label }}" class="form-label">
-                                    <i class="fas fa-clock me-1"></i>{{ form.horarioFuncionamento.label }}
+                                <label for="{{ form.horarioAbertura.id_for_label }}" class="form-label">
+                                    <i class="fas fa-clock me-1"></i>{{ form.horarioAbertura.label }}
                                 </label>
-                                {{ form.horarioFuncionamento }}
-                                {% if form.horarioFuncionamento.errors %}
-                                    <div class="text-danger">{{ form.horarioFuncionamento.errors }}</div>
+                                {{ form.horarioAbertura }}
+                                {% if form.horarioAbertura.errors %}
+                                    <div class="text-danger">{{ form.horarioAbertura.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group mb-2">
+                                <label for="{{ form.horarioFechamento.id_for_label }}" class="form-label">
+                                    <i class="fas fa-clock me-1"></i>{{ form.horarioFechamento.label }}
+                                </label>
+                                {{ form.horarioFechamento }}
+                                {% if form.horarioFechamento.errors %}
+                                    <div class="text-danger">{{ form.horarioFechamento.errors }}</div>
                                 {% endif %}
                             </div>
                         </div>
