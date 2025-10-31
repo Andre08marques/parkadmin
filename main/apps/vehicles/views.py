@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
-from .models import Veiculo
-from .forms import VeiculoAddForm
+from .models import Veiculo, TipoVeiculo
+from .forms import VeiculoAddForm, TipoVeiculoForm
 
 class ListVeiculo(View):
 
@@ -70,3 +70,73 @@ class VeiculoDelete(View):
        veiculo_delete = veiculo.delete()
        messages.success(request, f"Veículo excluído com sucesso!")
        return redirect('listveiculo')
+
+# Views para Tipo de Veículo
+class ListTipoVeiculo(View):
+    def get(self, request):
+        tipos = TipoVeiculo.objects.all()
+        context = {
+            'tipos': tipos,
+            'page_title': "Tipos de Veículo"
+        }
+        return render(request, 'tipo_veiculo/list_tipo_veiculo.html', context)
+
+class TipoVeiculoAdd(View):
+    def get(self, request):
+        form = TipoVeiculoForm()
+        context = {
+            'form': form,
+            'page_title': "Adicionar Tipo de Veículo"
+        }
+        return render(request, 'tipo_veiculo/add_tipo_veiculo.html', context)
+    
+    def post(self, request):
+        form = TipoVeiculoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Tipo de veículo cadastrado com sucesso!")
+            return redirect('list_tipo_veiculo')
+        
+        messages.error(request, "Não foi possível cadastrar o tipo de veículo.")
+        context = {
+            'form': form,
+            'page_title': "Adicionar Tipo de Veículo"
+        }
+        return render(request, 'tipo_veiculo/add_tipo_veiculo.html', context)
+
+class TipoVeiculoEdit(View):
+    def get(self, request, id):
+        tipo = TipoVeiculo.objects.get(pk=id)
+        form = TipoVeiculoForm(instance=tipo)
+        context = {
+            "form": form,
+            "page_title": "Editar Tipo de Veículo"
+        }
+        return render(request, 'tipo_veiculo/edit_tipo_veiculo.html', context)
+
+    def post(self, request, id):
+        tipo = TipoVeiculo.objects.get(pk=id)
+        form = TipoVeiculoForm(request.POST, instance=tipo)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Tipo de veículo editado com sucesso!")
+            return redirect('list_tipo_veiculo')
+
+        messages.error(request, f"Não foi possível editar o tipo de veículo: {form.errors}")
+        context = {
+            "form": form,
+            "page_title": "Editar Tipo de Veículo"
+        }
+        return render(request, 'tipo_veiculo/edit_tipo_veiculo.html', context)
+
+class TipoVeiculoDelete(View):
+    def get(self, request, id):
+        tipo = TipoVeiculo.objects.get(pk=id)
+        # Verifica se existem veículos associados
+        if tipo.veiculos.exists():
+            messages.error(request, "Não é possível excluir este tipo de veículo pois existem veículos associados a ele.")
+            return redirect('list_tipo_veiculo')
+            
+        tipo.delete()
+        messages.success(request, "Tipo de veículo excluído com sucesso!")
+        return redirect('list_tipo_veiculo')

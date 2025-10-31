@@ -1,0 +1,44 @@
+{% extends 'main_app/base/base.html' %}
+
+{% block page_title %}Lista de Vagas{% endblock page_title %}
+
+{% block content %}
+{% include "main_app/base/messages.html" %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <strong>Lista de Vagas</strong>
+                <a href="{% url 'vaga_create' %}" class="btn btn-primary float-right">Adicionar Vaga</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Pátio</th>
+                            <th>Tipo de Veículo</th>
+                            <th>Quantidade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vaga in vagas %}
+                        <tr>
+                            <td>{{ vaga.patio.nome }}</td>
+                            <td>{{ vaga.tipo_veiculo.nome }}</td>
+                            <td>{{ vaga.quantidade }}</td>
+                            <td>
+                                <a href="{% url 'vaga_update' vaga.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{% url 'vaga_delete' vaga.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

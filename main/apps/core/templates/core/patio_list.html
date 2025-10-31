@@ -1,0 +1,42 @@
+{% extends 'main_app/base/base.html' %}
+
+{% block page_title %}Lista de Pátios{% endblock page_title %}
+
+{% block content %}
+{% include "main_app/base/messages.html" %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <strong>Lista de Pátios</strong>
+                <a href="{% url 'patio_create' %}" class="btn btn-primary float-right">Adicionar Pátio</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Unidade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for patio in patios %}
+                        <tr>
+                            <td>{{ patio.nome }}</td>
+                            <td>{{ patio.unidade.nome }}</td>
+                            <td>
+                                <a href="{% url 'patio_update' patio.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{% url 'patio_delete' patio.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

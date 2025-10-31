@@ -49,7 +49,7 @@
                                             <td>{{ contrato.tipoFaturamento}}</td>
                                             
                                             <td>
-                                                <a class="btn btn-success" href="{% url 'editcontrato' %}"><i class="fas fa-pen"></i></a>
+                                                <a class="btn btn-success" href="{% url 'editcontrato' contrato.id %}"><i class="fas fa-pen"></i></a>
                                                 <a class="btn btn-danger" href=""><i class="fas fa-trash"></i></a>
                                             </td> 
                                                           
