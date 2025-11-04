@@ -104,25 +104,53 @@
                     </ul>
                 </li>
 
-                <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'listtableprice' %} active {% endif %}">
+                <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'parking:tabelapreco_list' %} active {% endif %}">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-car"></i>
+                        <i class="nav-icon fas fa-receipt"></i>
                         <p>
                             Tabela de preço
-                            <i class="fas fa-scroll"></i>
+                            <i class="fas fa-angle-left right"></i>
+        
                         </p>
                     </a>
                 
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{% url 'listtableprice' %}"
-                               class="nav-link {% if request.resolver_match.url_name == 'listtableprice' %} active {% endif %}">
+                            <a href="{% url 'parking:tabelapreco_list' %}"
+                               class="nav-link {% if request.resolver_match.url_name == 'parking:tabelapreco_list' %} active {% endif %}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Cadastrar Tabela</p>
                             </a>
                         </li>
-                    
                     </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'parking:tipocobranca_list' %}"
+                               class="nav-link {% if request.resolver_match.url_name == 'parking:tipocobranca_list' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Cadastrar Tipo de Cobrança</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'parking:tipoveiculo_list' %}"
+                               class="nav-link {% if request.resolver_match.url_name == 'parking:tipoveiculo_list' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Cadastrar Tipo de Veículo</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'parking:preco_list' %}"
+                               class="nav-link {% if request.resolver_match.url_name == 'parking:preco_list' %} active {% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Cadastrar Preço</p>
+                            </a>
+                        </li>
+                    </ul>
+
                 </li>
 
 

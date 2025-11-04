@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'main.apps.operations',
     'main.apps.parking',
     'main.apps.vehicles',
-    'main.apps.home'
+    'main.apps.home',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

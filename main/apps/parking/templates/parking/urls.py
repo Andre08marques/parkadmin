@@ -18,13 +18,9 @@ urlpatterns = [
     
     # TipoCobranca URLs
     path('tipos-cobranca/', views.TipoCobrancaListView.as_view(), name='tipocobranca_list'),
-    path('tipos-cobranca/novo/', views.TipoCobrancaCreateView .as_view(), name='tipocobranca_create'),
-    path('tipos-cobranca/<int:pk>/editar/', views.TipoCobrancaUpdateView.as_view(), name='tipocobranca_update'),
-    path('tipos-cobranca/<int:pk>/deletar/', views.TipoCobrancaDeleteView.as_view(), name='tipocobranca_delete'),
+    # ... Add other TipoCobranca URLs
     
     # Preco URLs
     path('precos/', views.PrecoListView.as_view(), name='preco_list'),
-    path('precos/novo/', views.PrecoCreateView.as_view(), name='preco_create'),
-    path('precos/<int:pk>/editar/', views.PrecoUpdateView.as_view(), name='preco_update'),
-    path('precos/<int:pk>/deletar/', views.PrecoDeleteView.as_view(), name='preco_delete'),
+    # ... Add other Preco URLs
 ]

@@ -1,0 +1,63 @@
+{% extends 'main_app/base/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Preço</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            {{ form.tabela.label_tag }}
+                            {% render_field form.tabela class="form-control" %}
+                            {% if form.tabela.errors %}
+                                <div class="invalid-feedback d-block">{{ form.tabela.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            {{ form.tipo_veiculo.label_tag }}
+                            {% render_field form.tipo_veiculo class="form-control" %}
+                            {% if form.tipo_veiculo.errors %}
+                                <div class="invalid-feedback d-block">{{ form.tipo_veiculo.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            {{ form.tipo_cobranca.label_tag }}
+                            {% render_field form.tipo_cobranca class="form-control" %}
+                            {% if form.tipo_cobranca.errors %}
+                                <div class="invalid-feedback d-block">{{ form.tipo_cobranca.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            {{ form.valor.label_tag }}
+                            {% render_field form.valor class="form-control" %}
+                            {% if form.valor.errors %}
+                                <div class="invalid-feedback d-block">{{ form.valor.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                    <a href="{% url 'parking:preco_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

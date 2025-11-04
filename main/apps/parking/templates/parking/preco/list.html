@@ -1,0 +1,55 @@
+{% extends 'main_app/base/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Preços</h5>
+            <div class="d-flex gap-2">
+                <form method="get" class="d-flex">
+                    <input type="text" name="search" value="{{ search }}" class="form-control" placeholder="Buscar preço...">
+                    <button type="submit" class="btn btn-primary ms-2">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <a href="{% url 'parking:preco_create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Novo Preço
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tabela</th>
+                        <th>Tipo de Veículo</th>
+                        <th>Tipo de Cobrança</th>
+                        <th>Valor</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for preco in precos %}
+                    <tr>
+                        <td>{{ preco.tabela.nome }}</td>
+                        <td>{{ preco.tipo_veiculo.nome }}</td>
+                        <td>{{ preco.tipo_cobranca.nome }}</td>
+                        <td>R$ {{ preco.valor }}</td>
+                        <td>
+                            <a href="{% url 'parking:preco_update' preco.pk %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'parking:preco_delete' preco.pk %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include 'main_app/base/pagination.html' %}
+</div>
+{% endblock %}
