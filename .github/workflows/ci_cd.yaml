@@ -3,11 +3,11 @@ name: CI Sistema parkadmin
 on:
   push:
     branches:
-      - main
+      - master
       - hml
   #pull_request:
    # branches:
-    #  - main
+    #  - master
 
 env:
   PYTHON_VERSION: '3.8'
@@ -49,8 +49,8 @@ jobs:
           tags: |
             ${{ env.DOCKER_IMAGE }}:hml-${{ github.run_id }}
 
-  build-main:
-    if: github.ref == 'refs/heads/main'
+  build-master:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     environment: PROD
     name: Build e Push PROD
