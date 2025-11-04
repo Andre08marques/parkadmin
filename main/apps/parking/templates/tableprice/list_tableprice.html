@@ -51,7 +51,7 @@
                                                           
                                         </tr>
                                     {% empty %}
-                                        <tr><td class="text-center" colspan="7">Não foi possível encontrar unidades.</td></tr>
+
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -74,7 +74,8 @@
     $(document).ready(function () {
         $('#tableclient').DataTable({
             language: {
-                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json",
+                emptyTable: "Nenhum tabela encontrada"
             }
         });
     });

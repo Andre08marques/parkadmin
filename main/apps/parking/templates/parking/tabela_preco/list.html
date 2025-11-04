@@ -1,0 +1,94 @@
+{% extends 'main_app/base/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Tabelas de Preço</h5>
+            <div class="d-flex gap-2">
+                <form method="get" class="d-flex">
+                    <input type="text" name="search" value="{{ search }}" class="form-control" placeholder="Buscar tabela...">
+                    <button type="submit" class="btn btn-primary ms-2">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <a href="{% url 'parking:tabelapreco_create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Nova Tabela
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Unidade</th>
+                        <th>Status</th>
+                        <th>Período</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tabela in tabelas %}
+                    <tr>
+                        <td>{{ tabela.nome }}</td>
+                        <td>{{ tabela.unidade.nome }}</td>
+                        <td>{% if tabela.ativa %}
+                            <span class="badge bg-success">Ativa</span>
+                            {% else %}
+                            <span class="badge bg-danger">Inativa</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ tabela.data_inicio|date:"d/m/Y" }} - {{ tabela.data_fim|date:"d/m/Y"|default:"Indefinido" }}</td>
+                        <td>
+                            <a href="{% url 'parking:tabelapreco_update' tabela.pk %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'parking:tabelapreco_delete' tabela.pk %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if is_paginated %}
+    <nav aria-label="Navegação" class="mt-3">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if search %}&search={{ search }}{% endif %}">
+                        <i class="fas fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search %}&search={{ search }}{% endif %}">
+                        <i class="fas fa-angle-double-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

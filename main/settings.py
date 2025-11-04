@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,12 +10,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tpi-=)6lp_+_u49yjz#n3hwl12dp7^2bj=c*=chea%sqm6w5&='
+
+SECRET_KEY = str(config('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['49.13.29.152','127.0.0.1','localhost']
+CSRF_TRUSTED_ORIGINS = ['http://localhost','http://49.13.29.152/',]
+
 
 
 # Application definition
@@ -33,7 +37,8 @@ INSTALLED_APPS = [
     'main.apps.operations',
     'main.apps.parking',
     'main.apps.vehicles',
-    'main.apps.home'
+    'main.apps.home',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -112,7 +117,10 @@ STATICFILES_DIRS = [
 ]
 
 # LOGIN
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+# E adicione esta configuração se necessário
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = 'home'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

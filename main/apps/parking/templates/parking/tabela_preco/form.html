@@ -1,0 +1,63 @@
+{% extends 'main_app/base/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">{% if form.instance.pk %}Editar{% else %}Nova{% endif %} Tabela de Preço</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            {{ form.nome.label_tag }}
+                            {% render_field form.nome class="form-control" %}
+                            {% if form.nome.errors %}
+                                <div class="invalid-feedback d-block">{{ form.nome.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            {{ form.unidade.label_tag }}
+                            {% render_field form.unidade class="form-control" %}
+                            {% if form.unidade.errors %}
+                                <div class="invalid-feedback d-block">{{ form.unidade.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            {{ form.data_inicio.label_tag }}
+                            {% render_field form.data_inicio class="form-control" type="date" %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            {{ form.data_fim.label_tag }}
+                            {% render_field form.data_fim class="form-control" type="date" %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check mt-4">
+                            {% render_field form.ativa class="form-check-input" %}
+                            {{ form.ativa.label_tag }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                    <a href="{% url 'parking:tabelapreco_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

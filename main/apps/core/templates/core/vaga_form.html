@@ -1,0 +1,28 @@
+{% extends 'main_app/base/base.html' %}
+
+{% block page_title %}Adicionar/Editar Vaga{% endblock page_title %}
+
+{% block content %}
+{% include "main_app/base/messages.html" %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <strong>Adicionar/Editar Vaga</strong>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <a href="{% url 'vaga_list' %}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

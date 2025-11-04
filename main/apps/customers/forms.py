@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.widgets import TextInput
 from .models import Contrato
 
 class FormSettings(forms.ModelForm):
@@ -15,6 +16,9 @@ class ContratoAddForm(FormSettings):
     class Meta:
         model = Contrato
         fields = ('__all__')
+        widgets = {
+            'datetext': TextInput(attrs={'type': 'date'}),
+        }
         labels = {
 
             "user": "Usuário*",

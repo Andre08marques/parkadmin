@@ -10,9 +10,9 @@ class User(AbstractUser):
     
     unidade = models.ForeignKey(
         'core.Unidade', 
-        on_delete=models.CASCADE, 
+        on_delete=models.PROTECT, 
         related_name='usuarios',
-        default=1
+        null=True
     )
     tipo = models.CharField(max_length=15, choices=TIPO_CHOICES, default='funcionario')
     telefone = models.CharField(max_length=20, blank=True)
@@ -24,4 +24,4 @@ class User(AbstractUser):
         verbose_name_plural = "Usuários"
 
     def __str__(self):
-        return f"{self.get_full_name()} - {self.unidade.nome}"
+        return f"{self.get_full_name()} - {self.unidade}"

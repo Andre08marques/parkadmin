@@ -1,0 +1,12 @@
+version: '3'
+services:
+  backend:
+    image: andretimarques/parkadmin:1.0.0
+    command: sh -c "python3 manage.py migrate --noinput && python3 manage.py collectstatic --noinput && python manage.py runserver"
+    restart: always
+    port:
+      - 8007:8000
+    volumes:
+      - /home/parkadmin/lms/.env:/code/.env
+    env_file:
+      - .env

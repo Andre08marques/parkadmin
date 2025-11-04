@@ -3,78 +3,166 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib import messages
-from .models import TabelaPreco
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.db.models import Q
+from .models import TabelaPreco, TipoVeiculo, TipoCobranca, Preco
 from .forms import TablePriceAddform
 
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
-class ListTablePrice(View):
+# TabelaPreco CRUD Views
+class TabelaPrecoListView(ListView):
+    model = TabelaPreco
+    template_name = 'parking/tabela_preco/list.html'
+    context_object_name = 'tabelas'
+    paginate_by = 10
 
-    def get(self, request):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get('search', '')
+        if search:
+            queryset = queryset.filter(
+                Q(nome__icontains=search) |
+                Q(unidade__nome__icontains=search)
+            )
+        return queryset.order_by('-id')
 
-        tabeladeprecos = TabelaPreco.objects.all()
-        context = {
-             "page_title": "Tabela de preço",
-            'tabeladeprecos': tabeladeprecos
-        }
-        return render(request, 'tableprice/list_tableprice.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search'] = self.request.GET.get('search', '')
+        return context
 
+class TabelaPrecoCreateView(CreateView):
+    model = TabelaPreco
+    template_name = 'parking/tabela_preco/form.html'
+    fields = ['unidade', 'nome', 'ativa', 'data_inicio', 'data_fim']
+    success_url = reverse_lazy('parking:tabelapreco_list')
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
-class TablePriceAdd(View):
+class TabelaPrecoUpdateView(UpdateView):
+    model = TabelaPreco
+    template_name = 'parking/tabela_preco/form.html'
+    fields = ['unidade', 'nome', 'ativa', 'data_inicio', 'data_fim']
+    success_url = reverse_lazy('parking:tabelapreco_list')
 
-    def get(self, request):
-       form = TablePriceAddform()
-       context = {
-           "form": form,
-           "page_title": "Adicionar Tabela de preço"
-       }
-       return render(request, 'tableprice/add_tableprice.html', context)
+class TabelaPrecoDeleteView(DeleteView):
+    model = TabelaPreco
+    template_name = 'parking/tabela_preco/delete.html'
+    success_url = reverse_lazy('parking:tabelapreco_list')
 
-    def post(self, request):
-        form = TablePriceAddform(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Tabela de preço cadastrada com sucesso!")
-            return redirect('listunidade')
+# TipoVeiculo CRUD Views
+class TipoVeiculoListView(ListView):
+    model = TipoVeiculo
+    template_name = 'parking/tipo_veiculo/list.html'
+    context_object_name = 'tipos_veiculo'
+    paginate_by = 10
 
-        messages.error(request, f"Não foi possível cadastrar a tabela de preço")
-        context = {
-            'form': form,
-            "page_title": "Adicionar Tabela de preço"
-        }
-        return render(request, 'tableprice/add_tableprice.html', context)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get('search', '')
+        if search:
+            queryset = queryset.filter(
+                Q(nome__icontains=search) |
+                Q(descricao__icontains=search)
+            )
+        return queryset.order_by('-id')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search'] = self.request.GET.get('search', '')
+        return context
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
-class TablePriceEdit(View):
+class TipoVeiculoCreateView(CreateView):
+    model = TipoVeiculo
+    template_name = 'parking/tipo_veiculo/form.html'
+    fields = ['nome', 'descricao']
+    success_url = reverse_lazy('parking:tipoveiculo_list')
 
-    def get(self, request, id):
-       group = TabelaPreco.objects.get(pk=id)
-       form = TablePriceAddform(request.POST or None, request.FILES or None, instance=group)
-       context = {
-           "form": form,
-           "page_title": "Editar tabela de preço"
-       }
-       return render(request, 'tableprice/edit_tableprice.html', context)
+class TipoVeiculoUpdateView(UpdateView):
+    model = TipoVeiculo
+    template_name = 'parking/tipo_veiculo/form.html'
+    fields = ['nome', 'descricao']
+    success_url = reverse_lazy('parking:tipoveiculo_list')
 
-    def post(self, request, id):
-        group = TabelaPreco.objects.get(pk=id)
-        form = TablePriceAddform(request.POST or None, request.FILES or None, instance=group)
-        print (form.errors)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Tabela de preço Editada com sucesso!")
-            return redirect('listtableprice')
+class TipoVeiculoDeleteView(DeleteView):
+    model = TipoVeiculo
+    template_name = 'parking/tipo_veiculo/delete.html'
+    success_url = reverse_lazy('parking:tipoveiculo_list')
 
-        messages.error(request, f"Não foi possível editar essa tabela de preço {form.errors}")
-        return redirect('listtableprice')
+# TipoCobranca CRUD Views
+class TipoCobrancaListView(ListView):
+    model = TipoCobranca
+    template_name = 'parking/tipo_cobranca/list.html'
+    context_object_name = 'tipos_cobranca'
+    paginate_by = 10
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get('search', '')
+        if search:
+            queryset = queryset.filter(
+                Q(nome__icontains=search) |
+                Q(descricao__icontains=search)
+            )
+        return queryset.order_by('-id')
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
-class TablePriceDelete(View):
-    def get(self, request, id):
-       tableprice = TabelaPreco.objects.get(pk=id)
-       tableprice_delete = tableprice.delete()
-       messages.success(request, f"Tablea de preço excluída com sucesso!")
-       return redirect('listtableprice')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search'] = self.request.GET.get('search', '')
+        return context
+
+class TipoCobrancaCreateView(CreateView):
+    model = TipoCobranca
+    template_name = 'parking/tipo_cobranca/form.html'
+    fields = ['nome', 'descricao']
+    success_url = reverse_lazy('parking:tipocobranca_list')
+
+class TipoCobrancaUpdateView(UpdateView):
+    model = TipoCobranca
+    template_name = 'parking/tipo_cobranca/form.html'
+    fields = ['nome', 'descricao']
+    success_url = reverse_lazy('parking:tipocobranca_list')
+
+class TipoCobrancaDeleteView(DeleteView):
+    model = TipoCobranca
+    template_name = 'parking/tipo_cobranca/delete.html'
+    success_url = reverse_lazy('parking:tipocobranca_list')
+
+# Preco CRUD Views
+class PrecoListView(ListView):
+    model = Preco
+    template_name = 'parking/preco/list.html'
+    context_object_name = 'precos'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get('search', '')
+        if search:
+            queryset = queryset.filter(
+                Q(tabela__nome__icontains=search) |
+                Q(tipo_veiculo__nome__icontains=search) |
+                Q(tipo_cobranca__nome__icontains=search)
+            )
+        return queryset.order_by('-id')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search'] = self.request.GET.get('search', '')
+        return context
+
+class PrecoCreateView(CreateView):
+    model = Preco
+    template_name = 'parking/preco/form.html'
+    fields = ['tabela', 'tipo_veiculo', 'tipo_cobranca', 'valor']
+    success_url = reverse_lazy('parking:preco_list')
+
+class PrecoUpdateView(UpdateView):
+    model = Preco
+    template_name = 'parking/preco/form.html'
+    fields = ['tabela', 'tipo_veiculo', 'tipo_cobranca', 'valor']
+    success_url = reverse_lazy('parking:preco_list')
+
+class PrecoDeleteView(DeleteView):
+    model = Preco
+    template_name = 'parking/preco/delete.html'
+    success_url = reverse_lazy('parking:preco_list')

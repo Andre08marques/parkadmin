@@ -36,7 +36,7 @@
                                             <td>{{ unidade.endereco_resumido }}</td>
                                             <td>
                                                 <a class="btn btn-success" href="{% url 'editunidade' unidade.id %}"><i class="fas fa-pen"></i></a>
-                                                <a class="btn btn-danger" href=""><i class="fas fa-trash"></i></a>
+                                                <a class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir essa unidade?')" href="{% url 'deleteunidade' unidade.id %}"><i class="fas fa-trash"></i></a>
                                             </td> 
                                                           
                                         </tr>
